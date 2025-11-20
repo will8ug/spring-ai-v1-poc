@@ -1,0 +1,18 @@
+###
+GET http://localhost:8080/health
+
+###
+POST http://localhost:8080/chat
+Content-Type: application/json
+
+{
+  "message": "What is the capital of China?"
+}
+
+###
+POST http://localhost:8080/reasoning
+Content-Type: application/json
+
+{
+  "message": "Which number is larger: 9.11 or 9.8?"
+}

@@ -20,6 +20,11 @@ public class AiChatController {
         return aiChatService.chat(request.message()).map(ChatResponse::new);
     }
 
+    @PostMapping("/reasoning")
+    public Mono<ChatResponse> reasoning(@RequestBody ChatRequest request) {
+        return aiChatService.reasoning(request.message()).map(ChatResponse::new);
+    }
+
     public record ChatRequest(String message) {}
     public record ChatResponse(String content) {}
 }
