@@ -1,1 +1,1 @@
-# spring-ai-1-poc
+# spring-ai-v1-poc
