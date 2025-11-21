@@ -4,6 +4,7 @@ import io.will.springai1poc.service.AiChatService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -16,15 +17,29 @@ public class AiChatController {
     }
 
     @PostMapping("/chat")
-    public Mono<ChatResponse> chat(@RequestBody ChatRequest request) {
-        return aiChatService.chat(request.message()).map(ChatResponse::new);
+    public Mono<CustomChatResponse> chat(@RequestBody CustomChatRequest request) {
+        return aiChatService.chat(request.message()).map(CustomChatResponse::withContent);
+    }
+
+    @PostMapping("/chat/stream")
+    public Flux<CustomChatResponse> chatStream(@RequestBody CustomChatRequest request) {
+        return aiChatService.chatStream(request.message());
     }
 
     @PostMapping("/reasoning")
-    public Mono<ChatResponse> reasoning(@RequestBody ChatRequest request) {
-        return aiChatService.reasoning(request.message()).map(ChatResponse::new);
+    public Mono<CustomChatResponse> reasoning(@RequestBody CustomChatRequest request) {
+        return aiChatService.reasoning(request.message()).map(CustomChatResponse::withContent);
     }
 
-    public record ChatRequest(String message) {}
-    public record ChatResponse(String content) {}
+    public record CustomChatRequest(String message) {}
+
+    public record CustomChatResponse(String content, String reasoningContent) {
+        public static CustomChatResponse withContent(String content) {
+            return new CustomChatResponse(content, "");
+        }
+
+        public static CustomChatResponse withReasoningContent(String reasoningContent) {
+            return new CustomChatResponse("", reasoningContent);
+        }
+    }
 }

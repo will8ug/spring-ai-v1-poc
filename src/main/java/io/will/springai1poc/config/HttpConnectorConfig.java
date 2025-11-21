@@ -19,7 +19,6 @@ public class HttpConnectorConfig {
         requestFactory.setConnectTimeout(Duration.ofSeconds(20));
         requestFactory.setReadTimeout(Duration.ofSeconds(120));
 
-        return RestClient.builder()
-                .requestFactory(requestFactory);
+        return RestClient.builder().requestFactory(requestFactory);
     }
 }

@@ -1,12 +1,12 @@
 package io.will.springai1poc.service;
 
+import io.will.springai1poc.controller.AiChatController.CustomChatResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.AssistantMessage;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.deepseek.DeepSeekAssistantMessage;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -30,7 +30,7 @@ public class AiChatService {
 
     public Mono<String> reasoning(String query) {
         return Mono.fromCallable(() -> {
-                    ChatResponse response = chatClient.prompt()
+                    var response = chatClient.prompt()
                             .user(query)
                             .call()
                             .chatResponse();
@@ -39,5 +39,17 @@ public class AiChatService {
                     return String.valueOf(message.getReasoningContent());
                 })
                 .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    public Flux<CustomChatResponse> chatStream(String query) {
+        var chatResponse = chatClient.prompt()
+                .user(query)
+                .stream()
+                .chatResponse();
+
+        return chatResponse.map(chunk -> {
+            var message = (DeepSeekAssistantMessage) chunk.getResult().getOutput();
+            return new CustomChatResponse(message.getText(), message.getReasoningContent());
+        });
     }
 }

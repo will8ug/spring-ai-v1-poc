@@ -16,3 +16,11 @@ Content-Type: application/json
 {
   "message": "Which number is larger: 9.11 or 9.8?"
 }
+
+###
+POST http://localhost:8080/chat/stream
+Content-Type: application/json
+
+{
+  "message": "Which number is larger: 9.11 or 9.8?"
+}

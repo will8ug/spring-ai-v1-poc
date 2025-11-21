@@ -21,10 +21,10 @@ public class AiChatControllerTest {
         webTestClient.post()
                 .uri("/chat")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new AiChatController.ChatRequest("This is a test message"))
+                .bodyValue(new AiChatController.CustomChatRequest("This is a test message"))
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(AiChatController.ChatResponse.class)
+                .expectBody(AiChatController.CustomChatResponse.class)
                 .value(response -> {
                     assertNotNull(response);
                     assertNotNull(response.content());
