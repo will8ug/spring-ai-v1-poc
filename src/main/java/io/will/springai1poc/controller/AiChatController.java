@@ -28,7 +28,7 @@ public class AiChatController {
 
     @PostMapping("/reasoning")
     public Mono<CustomChatResponse> reasoning(@RequestBody CustomChatRequest request) {
-        return aiChatService.reasoning(request.message()).map(CustomChatResponse::withContent);
+        return aiChatService.reasoning(request.message()).map(CustomChatResponse::withReasoningContent);
     }
 
     public record CustomChatRequest(String message) {}
