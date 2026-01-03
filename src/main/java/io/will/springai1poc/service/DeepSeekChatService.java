@@ -11,12 +11,12 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @Service
-public class AiChatService {
-    private final Logger logger = LoggerFactory.getLogger(AiChatService.class);
+public class DeepSeekChatService {
+    private final Logger logger = LoggerFactory.getLogger(DeepSeekChatService.class);
 
     private final ChatClient chatClient;
 
-    public AiChatService(ChatClient chatClient) {
+    public DeepSeekChatService(ChatClient chatClient) {
         this.chatClient = chatClient;
     }
 

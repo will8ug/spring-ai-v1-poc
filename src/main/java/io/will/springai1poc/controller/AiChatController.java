@@ -1,6 +1,6 @@
 package io.will.springai1poc.controller;
 
-import io.will.springai1poc.service.AiChatService;
+import io.will.springai1poc.service.DeepSeekChatService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,25 +10,25 @@ import reactor.core.publisher.Mono;
 @RestController
 public class AiChatController {
 
-    private final AiChatService aiChatService;
+    private final DeepSeekChatService deepSeekChatService;
 
-    public AiChatController(AiChatService aiChatService) {
-        this.aiChatService = aiChatService;
+    public AiChatController(DeepSeekChatService deepSeekChatService) {
+        this.deepSeekChatService = deepSeekChatService;
     }
 
     @PostMapping("/chat")
     public Mono<CustomChatResponse> chat(@RequestBody CustomChatRequest request) {
-        return aiChatService.chat(request.message()).map(CustomChatResponse::withContent);
+        return deepSeekChatService.chat(request.message()).map(CustomChatResponse::withContent);
     }
 
     @PostMapping("/chat/stream")
     public Flux<CustomChatResponse> chatStream(@RequestBody CustomChatRequest request) {
-        return aiChatService.chatStream(request.message());
+        return deepSeekChatService.chatStream(request.message());
     }
 
     @PostMapping("/reasoning")
     public Mono<CustomChatResponse> reasoning(@RequestBody CustomChatRequest request) {
-        return aiChatService.reasoning(request.message()).map(CustomChatResponse::withReasoningContent);
+        return deepSeekChatService.reasoning(request.message()).map(CustomChatResponse::withReasoningContent);
     }
 
     public record CustomChatRequest(String message) {}
