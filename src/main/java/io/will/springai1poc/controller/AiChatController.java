@@ -27,11 +27,6 @@ public class AiChatController {
         return deepSeekChatService.chatStream(request.message());
     }
 
-    @PostMapping("/reasoning")
-    public Mono<CustomChatResponse> reasoning(@RequestBody CustomChatRequest request) {
-        return deepSeekChatService.reasoning(request.message()).map(CustomChatResponse::withReasoningContent);
-    }
-
     public record CustomChatRequest(String message) {}
 
     public record CustomChatResponse(String content, String reasoningContent) {

@@ -28,19 +28,6 @@ public class DeepSeekChatService {
                 .subscribeOn(Schedulers.boundedElastic());
     }
 
-    public Mono<String> reasoning(String query) {
-        return Mono.fromCallable(() -> {
-                    var response = chatClient.prompt()
-                            .user(query)
-                            .call()
-                            .chatResponse();
-                    DeepSeekAssistantMessage message = (DeepSeekAssistantMessage) response.getResult().getOutput();
-                    logger.info("response text: {}", message.getText());
-                    return String.valueOf(message.getReasoningContent());
-                })
-                .subscribeOn(Schedulers.boundedElastic());
-    }
-
     public Flux<CustomChatResponse> chatStream(String query) {
         var chatResponse = chatClient.prompt()
                 .user(query)
