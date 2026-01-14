@@ -20,6 +20,7 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/chat/stream
 Content-Type: application/json
+Accept: text/event-stream
 
 {
   "message": "Which number is larger: 9.11 or 9.8?"
