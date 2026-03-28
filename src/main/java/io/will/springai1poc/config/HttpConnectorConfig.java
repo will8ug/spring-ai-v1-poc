@@ -19,7 +19,7 @@ public class HttpConnectorConfig {
 
     /**
      * Provides a RestClient.Builder bean for Spring AI's blocking RestClient calls.
-     * Expect to be used in XXXChatAutoConfiguration.
+     * Expect to be used in XXXChatAutoConfiguration, such as DeepSeekChatAutoConfiguration.
      */
     @Bean
     public RestClient.Builder restClientBuilder() {
